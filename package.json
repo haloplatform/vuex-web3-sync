@@ -1,0 +1,19 @@
+{
+  "name": "vuex-web3-sync",
+  "version": "0.0.1",
+  "description": "Web3 Vuex synchronization module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haloplatform/vuex-web3-sync.git"
+  },
+  "author": "Nicolai Moraru <dot.nick.dot.messing@gmail.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/haloplatform/vuex-web3-sync/issues"
+  },
+  "homepage": "https://github.com/haloplatform/vuex-web3-sync#readme"
+}
