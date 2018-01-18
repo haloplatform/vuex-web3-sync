@@ -44,6 +44,18 @@ export default {
         }
       })
     }),
+  getBalance: ({ commit, state }) =>
+    new Promise((resolve, reject) => {
+      state.web3.instance.eth.getBalance(state.web3.instance.coinbase, (err, result) => {
+        if (err) {
+          reject(err)
+        } else {
+          const balance = state.web3.instance.fromWei(result.toString(10), 'ether')
+          commit('setBalance', balance)
+          resolve(balance)
+        }
+      })
+    }),
   async monitorWeb3({ state, dispatch }) {
     if (state.web3.isLocal || !state.web3.instance) {
       return
@@ -57,12 +69,14 @@ export default {
       }
       // refresh coinbase
       await dispatch('getCoinbase')
+      await dispatch('getBalance')
     }
   },
   async init({ dispatch, commit, state }) {
     await dispatch('connectToWeb3')
     await dispatch('getBlockchainNetworkId')
     await dispatch('getCoinbase')
+    await dispatch('getBalance')
     commit('setAddress', state.web3.instance.eth.defaultAccount)
     dispatch('monitorWeb3')
   },

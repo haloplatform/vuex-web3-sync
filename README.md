@@ -20,4 +20,5 @@ web3Sync(store, 'webThree')
 * `isInjected` - need description
 * `networkId` - need description
 * `isLocal` - need description
+* `balance` - need description
 * `isApprovedNetwork` - need description

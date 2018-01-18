@@ -6,5 +6,6 @@ export default {
     isInjected: false,
     networkId: null,
     isLocal: false,
+    balance: null,
   },
 }

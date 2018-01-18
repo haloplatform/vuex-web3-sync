@@ -17,4 +17,7 @@ export default {
   setAddress(state, payload) {
     state.web3.address = payload
   },
+  setBalance(state, payload) {
+    state.web3.balance = payload
+  },
 }
