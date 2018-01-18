@@ -1,5 +1,5 @@
 {
-  "name": "vuex-web3-sync",
+  "name": "@haloplatform/vuex-web3-sync",
   "version": "0.1.0",
   "description": "Web3 Vuex synchronization module",
   "main": "dist/module.js",
