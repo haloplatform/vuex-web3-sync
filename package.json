@@ -2,7 +2,7 @@
   "name": "vuex-web3-sync",
   "version": "0.0.1",
   "description": "Web3 Vuex synchronization module",
-  "main": "src/index.js",
+  "main": "dist/module.js",
   "scripts": {
     "test": "npm run lint",
     "lint": "eslint .",
