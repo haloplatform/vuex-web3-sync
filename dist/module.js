@@ -289,7 +289,7 @@ var index = (function (store) {
     mutations: mutations,
     actions: actions
   });
-  store.dispatch('init');
+  store.dispatch(moduleName + '/init');
 });
 
 module.exports = index;

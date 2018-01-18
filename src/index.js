@@ -11,5 +11,5 @@ export default (store, moduleName = 'WebThree') => {
     mutations,
     actions,
   })
-  store.dispatch('init')
+  store.dispatch(`${moduleName}/init`)
 }
