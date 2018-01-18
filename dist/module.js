@@ -8,7 +8,9 @@ var state = {
   web3: {
     address: null,
     coinbase: null,
-    instance: null,
+    instance: function instance() {
+      return null;
+    },
     isInjected: false,
     networkId: null,
     isLocal: false,
@@ -114,13 +116,17 @@ var actions = {
           // Use Mist/MetaMask's provider
           var web3 = new Web3(window.web3.currentProvider);
           commit('setInjected', web3.isConnected());
-          commit('setInstance', web3);
+          commit('setInstance', function () {
+            return web3;
+          });
           commit('setLocal', false);
           resolve(web3);
         } else {
           var _web = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
           commit('setInjected', _web.isConnected());
-          commit('setInstance', _web);
+          commit('setInstance', function () {
+            return _web;
+          });
           commit('setLocal', true);
           resolve(_web);
         }
@@ -131,7 +137,7 @@ var actions = {
     var commit = _ref2.commit,
         state = _ref2.state;
     return new Promise(function (resolve, reject) {
-      state.web3.instance.version.getNetwork(function (err, networkId) {
+      state.web3.instance().version.getNetwork(function (err, networkId) {
         if (err) {
           reject(err);
         } else {
@@ -145,7 +151,7 @@ var actions = {
     var commit = _ref3.commit,
         state = _ref3.state;
     return new Promise(function (resolve, reject) {
-      state.web3.instance.eth.getCoinbase(function (err, coinbase) {
+      state.web3.instance().eth.getCoinbase(function (err, coinbase) {
         if (err) {
           reject(err);
         } else {
@@ -159,11 +165,11 @@ var actions = {
     var commit = _ref4.commit,
         state = _ref4.state;
     return new Promise(function (resolve, reject) {
-      state.web3.instance.eth.getBalance(state.web3.instance.coinbase, function (err, result) {
+      state.web3.instance().eth.getBalance(state.web3.instance().eth.coinbase, function (err, result) {
         if (err) {
           reject(err);
         } else {
-          var balance = state.web3.instance.fromWei(result.toString(10), 'ether');
+          var balance = state.web3.instance().fromWei(result.toString(10), 'ether');
           commit('setBalance', balance);
           resolve(balance);
         }
@@ -179,7 +185,7 @@ var actions = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (!(state.web3.isLocal || !state.web3.instance)) {
+              if (!(state.web3.isLocal || !state.web3.instance())) {
                 _context.next = 2;
                 break;
               }
@@ -260,7 +266,7 @@ var actions = {
               return dispatch('getBalance');
 
             case 8:
-              commit('setAddress', state.web3.instance.eth.defaultAccount);
+              commit('setAddress', state.web3.instance().eth.defaultAccount);
               dispatch('monitorWeb3');
 
             case 10:
