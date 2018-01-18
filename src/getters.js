@@ -1,4 +1,4 @@
-import { APPROVED_NETWORK_ID } from './constants'
+import { APPROVED_NETWORK_ID, NETWORKS } from './constants'
 
 export default {
   address: state => state.web3.address,
@@ -10,4 +10,5 @@ export default {
   balance: state => state.web3.balance,
   isApprovedNetwork: state =>
     state.web3.networkId && state.web3.networkId !== '' && state.web3.networkId === APPROVED_NETWORK_ID,
+  networkName: state => state.networkId && NETWORKS[state.networkId],
 }
