@@ -1,6 +1,14 @@
+[![npm scoped](https://img.shields.io/npm/v/@haloplatform/vuex-web3-sync.svg?style=for-the-badge)](https://www.npmjs.com/package/@haloplatform/vuex-web3-sync)
+
 # vuex-web3-sync
 
-###### Vuex module to sync with web3
+Vuex module to sync with web3
+
+## install:
+
+```shell
+npm i @haloplatform/vuex-web3-sync --save
+```
 
 ## Usage:
 
