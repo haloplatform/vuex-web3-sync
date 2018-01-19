@@ -14,7 +14,7 @@ npm i @haloplatform/vuex-web3-sync --save
 
 ```js
 import store from './vuex/store'
-import web3Sync from 'vuex-web3-sync'
+import web3Sync from '@haloplatform/vuex-web3-sync'
 
 web3Sync(store, 'webThree')
 // second parameter is module name, optional
@@ -23,10 +23,11 @@ web3Sync(store, 'webThree')
 ## Exposed Getters:
 
 * `address` - need description
-* `coinbase` - need description
-* `instance` - need description
-* `isInjected` - need description
-* `networkId` - need description
-* `isLocal` - need description
-* `balance` - need description
-* `isApprovedNetwork` - need description
+* `coinbase` - `String` ETH Address Hex
+* `instance` - `Function<Web3>` Function that returns web3 instance
+* `isInjected` - `Boolean` True if web3 is injected
+* `networkId` - `String` Network ID
+* `isLocal` - `Boolean` True if web3 instance is connected to local node
+* `balance` - `String` Walled balance
+* `isApprovedNetwork` - `Boolean` True if network is approved
+* `networkName` - `String` Network Name
