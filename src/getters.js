@@ -10,5 +10,5 @@ export default {
   balance: state => state.web3.balance,
   isApprovedNetwork: state =>
     state.web3.networkId && state.web3.networkId !== '' && state.web3.networkId === APPROVED_NETWORK_ID,
-  networkName: state => state.networkId && NETWORKS[state.networkId],
+  networkName: state => state.networkId && NETWORKS[state.web3.networkId],
 }
