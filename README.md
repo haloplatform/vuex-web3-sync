@@ -11,6 +11,7 @@ npm i @haloplatform/vuex-web3-sync --save
 ```
 
 ## Usage:
+requires Babel-Polyfill if you don't have it install it via: https://babeljs.io/docs/usage/polyfill
 
 ```js
 import store from './vuex/store'
