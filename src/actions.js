@@ -46,6 +46,10 @@ export default {
     }),
   getBalance: ({ commit, state }) =>
     new Promise((resolve, reject) => {
+      const coinbase = state.web3.instance().eth.coinbase
+      if (!coinbase) {
+        return resolve('0')
+      }
       state.web3.instance().eth.getBalance(state.web3.instance().eth.coinbase, (err, result) => {
         if (err) {
           reject(err)
