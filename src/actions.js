@@ -39,7 +39,7 @@ export default {
         if (err) {
           reject(err)
         } else {
-          commit('setCoinbase', coinbase)
+          if (state.coinbase !== coinbase) commit('setCoinbase', coinbase)
           resolve(coinbase)
         }
       })
@@ -55,7 +55,7 @@ export default {
           reject(err)
         } else {
           const balance = state.web3.instance().fromWei(result.toString(10), 'ether')
-          commit('setBalance', balance)
+          if (state.balance !== balance) commit('setBalance', balance)
           resolve(balance)
         }
       })
