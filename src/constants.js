@@ -6,8 +6,8 @@ export const NETWORKS = {
   '42': 'Eth - Kovan test network',
   '4447': 'Eth - Truffle Develop Network',
   '5777': 'Eth - Ganache Blockchain',
-  '425672638': 'haloqanet',
-  '4256338638': 'halodevnet',
+  '425672638': 'Halo - QA Network',
+  '4256338638': 'Halo - Developer Network',
 }
 
 export const APPROVED_NETWORK_ID = '5777'
