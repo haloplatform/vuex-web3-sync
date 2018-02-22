@@ -4,10 +4,10 @@
   "description": "Web3 Vuex synchronization module",
   "main": "dist/module.js",
   "scripts": {
-    "test": "npm run lint",
+    "test": "yarn lint",
     "lint": "eslint .",
     "build": "rollup -c rollup.config.js",
-    "prepublish": "npm run build"
+    "prepublish": "yarn build"
   },
   "repository": {
     "type": "git",
