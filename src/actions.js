@@ -39,7 +39,7 @@ export default {
         if (err) {
           reject(err)
         } else {
-          if (state.coinbase !== coinbase) commit('setCoinbase', coinbase)
+          if (state.coinbase !== coinbase) commit('setCoinbase', coinbase || state.web3.address)
           resolve(coinbase)
         }
       })
@@ -60,7 +60,7 @@ export default {
         }
       })
     }),
-  async monitorWeb3({ state, dispatch }) {
+  async monitorWeb3({ state, dispatch, commit }) {
     if (state.web3.isLocal || !state.web3.instance()) {
       return
     }
@@ -74,6 +74,11 @@ export default {
       // refresh coinbase
       await dispatch('getCoinbase')
       await dispatch('getBalance')
+      const eth = state.web3.instance().eth
+      if (!eth.defaultAccount && eth.accounts && eth.accounts.length) {
+        eth.defaultAccount = eth.accounts[0]
+      }
+      commit('setAddress', eth.defaultAccount)
     }
   },
   async init({ dispatch, commit, state }) {
