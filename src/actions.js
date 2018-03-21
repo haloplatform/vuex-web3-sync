@@ -39,7 +39,7 @@ export default {
         if (err) {
           reject(err)
         } else {
-          if (state.coinbase !== coinbase) commit('setCoinbase', coinbase)
+          if (state.coinbase !== coinbase) commit('setCoinbase', coinbase || state.web3.address)
           resolve(coinbase)
         }
       })
