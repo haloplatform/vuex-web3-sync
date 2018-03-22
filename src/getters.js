@@ -8,6 +8,7 @@ export default {
   networkId: state => state.web3.networkId,
   isLocal: state => state.web3.isLocal,
   balance: state => state.web3.balance,
+  isUnlocked: state => state.web3.isUnlocked,
   isApprovedNetwork: state =>
     state.web3.networkId && state.web3.networkId !== '' && state.web3.networkId === APPROVED_NETWORK_ID,
   networkName: state => state.web3.networkId && NETWORKS[state.web3.networkId],

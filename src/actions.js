@@ -37,6 +37,10 @@ export default {
     new Promise((resolve, reject) => {
       state.web3.instance().eth.getCoinbase((err, coinbase) => {
         if (err) {
+          if (state.web3.address) {
+            commit('setCoinbase', state.web3.address)
+            resolve(state.web3.address)
+          }
           reject(err)
         } else {
           if (state.coinbase !== coinbase) commit('setCoinbase', coinbase || state.web3.address)
@@ -46,11 +50,11 @@ export default {
     }),
   getBalance: ({ commit, state }) =>
     new Promise((resolve, reject) => {
-      const coinbase = state.web3.instance().eth.coinbase
+      const coinbase = state.web3.instance().eth.defaultAccount
       if (!coinbase) {
         return resolve('0')
       }
-      state.web3.instance().eth.getBalance(state.web3.instance().eth.coinbase, (err, result) => {
+      state.web3.instance().eth.getBalance(state.web3.instance().eth.defaultAccount, (err, result) => {
         if (err) {
           reject(err)
         } else {
@@ -60,10 +64,21 @@ export default {
         }
       })
     }),
+  checkUnlock: ({ commit, state }) =>
+    new Promise((resolve, reject) => {
+      state.web3.instance().eth.sign(state.web3.address, "")
+        .then((data) => {
+          commit('setUnlock', true)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    }),
   async monitorWeb3({ state, dispatch, commit }) {
-    if (state.web3.isLocal || !state.web3.instance()) {
-      return
-    }
+    // if (state.web3.isLocal || !state.web3.instance()) {
+    //   return
+    // }
     while (true) {
       await sleep(1000)
       // check for networkId change
@@ -72,21 +87,53 @@ export default {
         return window.location.reload()
       }
       // refresh coinbase
-      await dispatch('getCoinbase')
-      await dispatch('getBalance')
       const eth = state.web3.instance().eth
       if (!eth.defaultAccount && eth.accounts && eth.accounts.length) {
         eth.defaultAccount = eth.accounts[0]
       }
       commit('setAddress', eth.defaultAccount)
+      // commit('setCoinbase', eth.defaultAccount)
+      try {
+        await dispatch('getCoinbase')
+      } catch (err) {
+        console.log('get coinbase error:', err)
+      }
+      try {
+        await dispatch('getBalance')
+      } catch (err) {
+        console.log('get balance error:', err)
+      }
+      try {
+        await dispatch('checkUnlock')
+      } catch (err) {
+        commit('setUnlock', false)
+        console.log(err)
+      }
     }
   },
   async init({ dispatch, commit, state }) {
     await dispatch('connectToWeb3')
     await dispatch('getBlockchainNetworkId')
-    await dispatch('getCoinbase')
-    await dispatch('getBalance')
-    commit('setAddress', state.web3.instance().eth.defaultAccount)
+    const eth = state.web3.instance().eth
+    if (!eth.defaultAccount && eth.accounts && eth.accounts.length) {
+      eth.defaultAccount = eth.accounts[0]
+    }
+    commit('setAddress', eth.defaultAccount)
+    try {
+      await dispatch('getCoinbase')
+    } catch (err) {
+      console.log('get coinbase error:', err)
+    }
+    try {
+      await dispatch('getBalance')
+    } catch (err) {
+      console.log('get balance error:', err)
+    }
+    try {
+      await dispatch('checkUnlock')
+    } catch (err) {
+      commit('setUnlock', false)
+    }
     dispatch('monitorWeb3')
   },
 }

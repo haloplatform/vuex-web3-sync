@@ -20,4 +20,7 @@ export default {
   setBalance(state, payload) {
     state.web3.balance = payload
   },
+  setUnlock(state, payload) {
+    state.web3.isUnlocked = payload
+  }
 }

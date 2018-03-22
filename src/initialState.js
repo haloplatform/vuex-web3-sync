@@ -7,5 +7,6 @@ export default {
     networkId: null,
     isLocal: false,
     balance: null,
+    isUnlocked: false,
   },
 }
