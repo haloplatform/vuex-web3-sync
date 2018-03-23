@@ -64,16 +64,16 @@ export default {
         }
       })
     }),
-  checkUnlock: ({ commit, state }) =>
+  checkUnlock: ({ state }) =>
     new Promise((resolve, reject) => {
-      state.web3.instance().eth.sign(state.web3.address, "")
-        .then((data) => {
-          commit('setUnlock', true)
-          resolve(data)
-        })
-        .catch((error) => {
-          reject(error)
-        })
+      state.web3.instance().eth.sign(state.web3.address, '', err => {
+        if (err) {
+          console.log('probably not unlocked', err)
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
     }),
   async monitorWeb3({ state, dispatch, commit }) {
     // if (state.web3.isLocal || !state.web3.instance()) {
@@ -103,12 +103,7 @@ export default {
       } catch (err) {
         console.log('get balance error:', err)
       }
-      try {
-        await dispatch('checkUnlock')
-      } catch (err) {
-        commit('setUnlock', false)
-        console.log(err)
-      }
+      commit('setUnlock', await dispatch('checkUnlock'))
     }
   },
   async init({ dispatch, commit, state }) {
@@ -129,11 +124,7 @@ export default {
     } catch (err) {
       console.log('get balance error:', err)
     }
-    try {
-      await dispatch('checkUnlock')
-    } catch (err) {
-      commit('setUnlock', false)
-    }
+    commit('setUnlock', await dispatch('checkUnlock'))
     dispatch('monitorWeb3')
   },
 }
