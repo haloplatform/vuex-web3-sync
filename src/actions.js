@@ -68,7 +68,6 @@ export default {
     new Promise((resolve, reject) => {
       state.web3.instance().eth.sign(state.web3.address, '', err => {
         if (err) {
-          console.log('probably not unlocked', err)
           resolve(false)
         } else {
           resolve(true)
