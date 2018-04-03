@@ -29,6 +29,6 @@ web3Sync(store, 'webThree')
 * `isInjected` - `Boolean` True if web3 is injected
 * `networkId` - `String` Network ID
 * `isLocal` - `Boolean` True if web3 instance is connected to local node
-* `balance` - `String` Walled balance
+* `balance` - `String` Wallet balance
 * `isApprovedNetwork` - `Boolean` True if network is approved
 * `networkName` - `String` Network Name
