@@ -11,6 +11,7 @@ npm i @haloplatform/vuex-web3-sync --save
 ```
 
 ## Usage:
+
 requires Babel-Polyfill if you don't have it install it via: https://babeljs.io/docs/usage/polyfill
 
 ```js
@@ -32,3 +33,8 @@ web3Sync(store, 'webThree')
 * `balance` - `String` Wallet balance
 * `isApprovedNetwork` - `Boolean` True if network is approved
 * `networkName` - `String` Network Name
+* `filter` - same as `web3.eth.filter`
+* `reset` - same as `web3.reset`
+* `sha3` - same as `web3.sha3`
+* `contract` - same as `web3.eth.contract`
+* `isConnected` - same as `web3.isConnected`
