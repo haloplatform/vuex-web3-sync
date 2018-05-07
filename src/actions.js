@@ -1,26 +1,17 @@
 import Web3 from 'web3'
+import { Provider, Accounts } from '@haloplatform/halo.js'
 
+const accounts = new Accounts()
 const sleep = (ms = 1000) => new Promise((resolve, reject) => setTimeout(resolve, ms))
 
 export default {
   connectToWeb3: ({ commit }) =>
     new Promise((resolve, reject) => {
-      window.addEventListener('load', () => {
-        if (window.web3 !== undefined) {
-          // Use Mist/MetaMask's provider
-          const web3 = new Web3(window.web3.currentProvider)
-          commit('setInjected', web3.isConnected())
-          commit('setInstance', () => web3)
-          commit('setLocal', false)
-          resolve(web3)
-        } else {
-          const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
-          commit('setInjected', web3.isConnected())
-          commit('setInstance', () => web3)
-          commit('setLocal', true)
-          resolve(web3)
-        }
-      })
+      const web3 = new Web3(new Provider())
+      commit('setInjected', web3.isConnected())
+      commit('setInstance', () => web3)
+      commit('setLocal', false)
+      resolve(web3)
     }),
   getBlockchainNetworkId: ({ commit, state }) =>
     new Promise((resolve, reject) => {
@@ -50,11 +41,11 @@ export default {
     }),
   getBalance: ({ commit, state }) =>
     new Promise((resolve, reject) => {
-      const coinbase = state.web3.instance().eth.defaultAccount
+      const coinbase = state.web3.coinbase
       if (!coinbase) {
         return resolve('0')
       }
-      state.web3.instance().eth.getBalance(state.web3.instance().eth.defaultAccount, (err, result) => {
+      state.web3.instance().eth.getBalance(state.web3.coinbase, (err, result) => {
         if (err) {
           reject(err)
         } else {
@@ -64,36 +55,20 @@ export default {
         }
       })
     }),
-  checkUnlock: ({ state }) =>
-    new Promise((resolve, reject) => {
-      state.web3.instance().eth.sign(state.web3.address, '', err => {
-        if (err) {
-          resolve(false)
-        } else {
-          resolve(true)
-        }
-      })
-    }),
+  async checkUnlock({ state }) {
+    const unlocked = await accounts.unlockedAccounts()
+
+    return unlocked.includes(state.web3.coinbase)
+  },
   async monitorWeb3({ state, dispatch, commit }) {
     // if (state.web3.isLocal || !state.web3.instance()) {
     //   return
     // }
     while (true) {
       await sleep(1000)
-      // check for networkId change
-      const oldNetworkId = state.web3.networkId
-      if (oldNetworkId !== (await dispatch('getBlockchainNetworkId'))) {
-        return window.location.reload()
-      }
       // refresh coinbase
-      const eth = state.web3.instance().eth
-      if (!eth.defaultAccount && eth.accounts && eth.accounts.length) {
-        eth.defaultAccount = eth.accounts[0]
-      }
-      commit('setAddress', eth.defaultAccount)
-      // commit('setCoinbase', eth.defaultAccount)
       try {
-        await dispatch('getCoinbase')
+        commit('setAddress', await dispatch('getCoinbase'))
       } catch (err) {
         console.log('get coinbase error:', err)
       }
@@ -108,13 +83,8 @@ export default {
   async init({ dispatch, commit, state }) {
     await dispatch('connectToWeb3')
     await dispatch('getBlockchainNetworkId')
-    const eth = state.web3.instance().eth
-    if (!eth.defaultAccount && eth.accounts && eth.accounts.length) {
-      eth.defaultAccount = eth.accounts[0]
-    }
-    commit('setAddress', eth.defaultAccount)
     try {
-      await dispatch('getCoinbase')
+      commit('setAddress', await dispatch('getCoinbase'))
     } catch (err) {
       console.log('get coinbase error:', err)
     }

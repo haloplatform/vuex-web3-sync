@@ -12,4 +12,9 @@ export default {
   isApprovedNetwork: state =>
     state.web3.networkId && state.web3.networkId !== '' && state.web3.networkId === APPROVED_NETWORK_ID,
   networkName: state => state.web3.networkId && NETWORKS[state.web3.networkId],
+  filter: state => state.web3.instance().eth.filter,
+  reset: state => state.web3.instance().reset,
+  sha3: state => state.web3.instance().sha3,
+  contract: state => state.web3.instance().eth.contract,
+  isConnected: state => state.web3.instance().isConnected,
 }

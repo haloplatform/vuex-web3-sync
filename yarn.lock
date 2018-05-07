@@ -71,6 +71,10 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@haloplatform/halo.js@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@haloplatform/halo.js/-/halo.js-0.1.2.tgz#f12a20f519fac8a9a53e5dbe2e38ed8b6864e0ec"
+
 acorn-jsx@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-3.0.1.tgz#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
