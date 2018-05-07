@@ -35,6 +35,7 @@
     "rollup-plugin-babel": "^3.0.3"
   },
   "dependencies": {
+    "@haloplatform/halo.js": "^0.1.2",
     "web3": "0.20.6"
   }
 }
