@@ -16,5 +16,5 @@ export default {
   reset: state => state.web3.instance().reset,
   sha3: state => state.web3.instance().sha3,
   contract: state => state.web3.instance().eth.contract,
-  isConnected: state => state.web3.instance().isConnected,
+  isConnected: state => state.web3.isConnected,
 }

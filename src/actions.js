@@ -78,6 +78,7 @@ export default {
         console.log('get balance error:', err)
       }
       commit('setUnlock', await dispatch('checkUnlock'))
+      commit('setConnected', state.web3.instance().isConnected())
     }
   },
   async init({ dispatch, commit, state }) {
@@ -94,6 +95,7 @@ export default {
       console.log('get balance error:', err)
     }
     commit('setUnlock', await dispatch('checkUnlock'))
+    commit('setConnected', state.web3.instance().isConnected())
     dispatch('monitorWeb3')
   },
 }

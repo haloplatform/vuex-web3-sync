@@ -10,5 +10,6 @@ export default {
     isLocal: false,
     balance: null,
     isUnlocked: false,
+    isConnected: false,
   },
 }
