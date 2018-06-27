@@ -22,5 +22,8 @@ export default {
   },
   setUnlock(state, payload) {
     state.web3.isUnlocked = payload
-  }
+  },
+  setConnected(state, payload) {
+    state.web3.isConnected = payload
+  },
 }
