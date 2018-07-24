@@ -1,6 +1,6 @@
 {
   "name": "@haloplatform/vuex-web3-sync",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "Web3 Vuex synchronization module",
   "main": "dist/module.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "rollup-plugin-babel": "^3.0.3"
   },
   "dependencies": {
-    "@haloplatform/halo.js": "^0.1.20",
+    "@haloplatform/halo.js": "^0.2.1",
     "web3": "0.20.6"
   }
 }
