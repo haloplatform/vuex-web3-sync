@@ -71,9 +71,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@haloplatform/halo.js@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@haloplatform/halo.js/-/halo.js-0.2.1.tgz#3200841077c5823a4dec53fbd180ebf0aa41995b"
+"@haloplatform/halo.js@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@haloplatform/halo.js/-/halo.js-0.3.0.tgz#7b50bbb1a950f1bb42c5ea40cebddad681e03546"
   dependencies:
     "@types/semver" "^5.5.0"
     semver "^5.5.0"
