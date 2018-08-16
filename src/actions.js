@@ -34,7 +34,7 @@ export default {
           }
           reject(err)
         } else {
-          if (state.coinbase !== coinbase) commit('setCoinbase', coinbase || state.web3.address)
+          if (state.web3.coinbase !== coinbase) commit('setCoinbase', coinbase || state.web3.address)
           resolve(coinbase)
         }
       })
@@ -50,7 +50,7 @@ export default {
           reject(err)
         } else {
           const balance = state.web3.instance().fromWei(result.toString(10), 'ether')
-          if (state.balance !== balance) commit('setBalance', balance)
+          if (state.web3.balance !== balance) commit('setBalance', balance)
           resolve(balance)
         }
       })
@@ -68,7 +68,8 @@ export default {
       await sleep(1000)
       // refresh coinbase
       try {
-        commit('setAddress', await dispatch('getCoinbase'))
+        const address = await dispatch('getCoinbase')
+        if (address !== state.web3.address) commit('setAddress', address)
       } catch (err) {
         console.log('get coinbase error:', err)
       }
@@ -77,8 +78,12 @@ export default {
       } catch (err) {
         console.log('get balance error:', err)
       }
-      commit('setUnlock', await dispatch('checkUnlock'))
-      commit('setConnected', state.web3.instance().isConnected())
+
+      const isUnlocked = await dispatch('checkUnlock')
+      if (isUnlocked !== state.web3.isUnlocked) commit('setUnlock', isUnlocked)
+
+      const isConnected = state.web3.instance().isConnected()
+      if (isConnected !== state.web3.isConnected) commit('setConnected', isConnected)
     }
   },
   async init({ dispatch, commit, state }) {
